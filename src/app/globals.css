@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Design tokens — BOXDLE
+  Brand color is provisional (mockup orange). When the client sends the final
+  brand color, change --color-brand / --color-brand-dark here only.
+*/
+@theme {
+  /* Brand — confirmed brand orange */
+  --color-brand: #fd7304;
+  --color-brand-dark: #e5660a;
+  --color-brand-soft: #fff1e6;
+
+  /* Ink / surfaces */
+  --color-ink: #111827; /* primary text + dark sections */
+  --color-navy: #0f1a2e; /* footer / dark solution band */
+  --color-cream: #faf6ef; /* soft section / CTA cards */
+  --color-line: #e5e7eb; /* borders */
+  --color-muted: #6b7280; /* secondary text */
+  --color-faint: #9ca3af; /* tertiary text */
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), "Pretendard", -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* Layout */
+  --spacing-header: 4.5rem;
+
+  /* Radius */
+  --radius-card: 0.875rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Shared container */
+.container-page {
+  width: 100%;
+  max-width: 80rem; /* 1280px */
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container-page {
+    padding-inline: 2rem;
+  }
 }

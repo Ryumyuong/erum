@@ -1,0 +1,185 @@
+{
+  "brand": {
+    "name": "BOXDLE",
+    "tagline": "베이커리, 카페, 디저트, 식품 브랜드를 위한 맞춤 패키지 제작 파트너입니다."
+  },
+  "nav": {
+    "about": "회사소개",
+    "portfolio": "포트폴리오",
+    "guide": "제작가이드",
+    "faq": "자주묻는질문",
+    "glossary": "용어사전",
+    "blog": "블로그",
+    "quote": "견적 문의하기"
+  },
+  "header": {
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기"
+  },
+  "common": {
+    "viewAll": "전체 보기",
+    "learnMore": "자세히 보기",
+    "contactUs": "문의하기",
+    "readMore": "자세히 보기",
+    "search": "검색",
+    "loading": "불러오는 중…",
+    "all": "전체",
+    "noResults": "검색 결과가 없습니다."
+  },
+  "home": {
+    "heroTitle": "기억에 남는 패키지를 만듭니다",
+    "heroSubtitle": "브랜드를 기억하게 만드는 프리미엄 맞춤 패키지를 제작합니다.",
+    "heroCta": "견적 문의하기",
+    "scroll": "스크롤",
+    "portfolioHeading": "포트폴리오",
+    "portfolioViewAll": "전체 프로젝트 보기",
+    "whyHeading": "왜 저희와 함께해야 하나요?",
+    "processHeading": "제작 프로세스",
+    "processSubtitle": "어디서부터 시작할지 모르겠다면, 적합한 옵션을 추천해 드립니다.",
+    "solutionHeading": "맞춤 패키지 솔루션",
+    "guideCardTitle": "제작가이드",
+    "guideCardDesc": "시작 전, 구조·재질·후가공의 기본 개념을 쉽게 알아보세요.",
+    "faqCardTitle": "자주 묻는 질문",
+    "faqCardDesc": "최소수량, 납기, 디자인 파일, 결제 등 궁금증을 확인하세요.",
+    "ctaHeading": "브랜드를 위한 맞춤 패키지를 제작할 준비가 되셨나요?"
+  },
+  "page": {
+    "about": {
+      "title": "1984년부터 이어온 패키지 제작 전문성",
+      "subtitle": "오랜 노하우로 쌓은 패키지 제작으로, 수출에 신뢰를 더하고 브랜드 가치를 높입니다.",
+      "coreValues": "핵심 가치",
+      "story": "우리 이야기",
+      "storyBody": "저희는 오랜 시간 종이 패키지, 카톤, 박스를 제작하며 미국부터 아시아까지 여러 시장에서 신뢰를 쌓아왔습니다. 디자인부터 제작까지 전 공정을 직접 진행하며, 품질과 납기에 깊은 책임을 다합니다.",
+      "strengths": "우리의 강점",
+      "system": "시스템",
+      "gallery": "공장 및 장비",
+      "clients": "거래처"
+    },
+    "guide": {
+      "title": "맞춤 패키지 제작 가이드",
+      "subtitle": "제작을 시작하기 전, 구조·재질·인쇄·후가공의 기본 개념을 쉽게 이해할 수 있도록 안내합니다.",
+      "helpTitle": "어떤 옵션을 선택해야 할지 모르겠나요?",
+      "helpDesc": "간단한 정보만 알려주시면 전문가가 브랜드에 적합한 재질, 인쇄 방식, 후가공 조합을 추천해 드립니다.",
+      "helpCta": "전문가에게 문의"
+    },
+    "faq": {
+      "title": "자주 묻는 질문",
+      "subtitle": "맞춤 패키지 제작, 최소수량, 납기, 배송, 디자인 파일, 결제, 제작 과정에 대한 답변을 확인해보세요.",
+      "searchPlaceholder": "최소수량, 납기, 디자인 파일 등에 대한 질문을 검색해보세요.",
+      "ctaHeading": "브랜드를 위한 맞춤 패키지를 제작할 준비가 되셨나요?",
+      "ctaQuote": "견적 문의하기",
+      "ctaWhatsapp": "왓츠앱으로 문의하기",
+      "ctaEmail": "이메일 문의하기"
+    },
+    "glossary": {
+      "title": "패키지 용어사전",
+      "subtitle": "인쇄, 지류, 구조, 후가공 용어를 쉽게 설명합니다.",
+      "searchPlaceholder": "CMYK, 별색, 단상자 같은 용어를 검색해보세요.",
+      "related": "관련 포트폴리오"
+    },
+    "blog": {
+      "title": "패키지 인사이트",
+      "subtitle": "성장하는 브랜드를 위한 패키지 제작 가이드, 사례, 생산 팁을 소개합니다."
+    },
+    "portfolio": {
+      "title": "박스 종류별 제작 예시를 찾아보세요",
+      "subtitle": "패키지 형태, 사용 분야, 재질, 인쇄 방식, 후가공 옵션을 선택해 실제 맞춤제작 레퍼런스를 확인할 수 있습니다.",
+      "searchPlaceholder": "품번, 제품명, 박스 종류, 재질로 검색",
+      "results": "{count}개의 레퍼런스를 찾았습니다",
+      "filter": "필터",
+      "reset": "초기화",
+      "ctaHeading": "원하는 패키지와 비슷한 사례를 찾으셨나요?",
+      "ctaDesc": "참고 제품을 보내주시면 제작 가능성과 견적을 안내해 드립니다.",
+      "ctaButton": "비슷한 제품으로 견적 문의하기",
+      "back": "포트폴리오로 돌아가기",
+      "detailQuote": "이 제품으로 견적 문의하기",
+      "viewDetail": "상세 보기",
+      "spec": {
+        "itemNo": "품번",
+        "type": "종류",
+        "form": "형태",
+        "dimensions": "장폭고 (가로×세로×높이)",
+        "material": "지류·재질",
+        "printing": "인쇄",
+        "coating": "코팅",
+        "finishing": "후가공"
+      }
+    },
+    "quote": {
+      "standardTitle": "표준 견적문의",
+      "recommendedTitle": "추천 견적문의",
+      "toRecommended": "추천 견적 요청으로 전환",
+      "toStandard": "표준 견적 요청으로 전환",
+      "recommendAll": "모든 항목 추천받기",
+      "recommendedIntro": "전문 용어를 모두 알 필요는 없습니다. 알고 있는 정보만 남겨주시면 전문가가 적합한 옵션을 추천해드립니다.",
+      "sourceProduct": "문의 제품",
+      "section": {
+        "contact": "연락처 정보",
+        "product": "제품 정보",
+        "structure": "박스 구조",
+        "quantitySize": "수량 및 사이즈",
+        "material": "재질",
+        "printing": "인쇄 방식",
+        "finishing": "후가공 옵션",
+        "additional": "추가 정보",
+        "details": "프로젝트 세부사항",
+        "nextSteps": "다음 단계는?"
+      },
+      "field": {
+        "company": "회사명",
+        "contactName": "담당자명",
+        "email": "이메일",
+        "phone": "전화번호",
+        "productName": "제품명",
+        "productNamePh": "예: 초콜릿 케이크, 마카롱 세트 등",
+        "category": "제품명 / 카테고리",
+        "categoryPh": "예: 초콜릿 케이크, 마카롱 세트, 쿠키 박스",
+        "quantity": "수량",
+        "quantityPh": "예: 500-1000개",
+        "innerSize": "내부 크기 (mm)",
+        "width": "가로",
+        "depth": "세로",
+        "height": "높이",
+        "designLink": "참고 이미지 또는 디자인 파일 (선택사항)",
+        "designLinkPh": "https://drive.google.com/... 또는 https://dropbox.com/...",
+        "fileUpload": "클릭하여 업로드하거나 파일을 여기에 끌어다 놓으세요",
+        "fileHint": "이미지, PDF, AI 파일 등",
+        "budget": "예산 범위 (선택사항)",
+        "budgetPh": "예: 50만 ~ 100만 원",
+        "leadTime": "희망 납기 (선택사항)",
+        "leadTimePh": "예: 4주 이내",
+        "message": "추가 요청사항 / 문의내용",
+        "messagePh": "특별한 요구사항, 구조, 참고자료 등을 자유롭게 작성해주세요…",
+        "requirements": "제품과 패키지 요구사항을 알려주세요",
+        "requirementsPh": "다음 내용을 알려주세요:\n- 어떤 제품을 포장하나요?\n- 대략적인 크기/치수 (알고 계시다면)\n- 디자인 선호도나 브랜드 가이드라인\n- 희망 납기\n- 예산 범위 (해당되는 경우)",
+        "optional": "선택사항"
+      },
+      "nextStep": {
+        "one": "패키지 전문가가 요청 내용을 검토합니다",
+        "two": "최적의 재질, 구조, 인쇄 옵션을 추천해드립니다",
+        "three": "2-3 영업일 내에 상세한 견적을 받으실 수 있습니다"
+      },
+      "submit": "견적문의 제출하기",
+      "submitting": "제출 중…",
+      "successTitle": "견적문의가 접수되었습니다",
+      "successBody": "감사합니다. 패키지 전문가가 요청 내용을 검토하여 2-3 영업일 내에 연락드리겠습니다.",
+      "successAnother": "새 견적문의 작성",
+      "errorRequired": "필수 항목을 모두 입력해주세요.",
+      "errorGeneric": "문제가 발생했습니다. 다시 시도해주세요."
+    }
+  },
+  "footer": {
+    "menu": "메뉴",
+    "resources": "리소스",
+    "contact": "연락처",
+    "home": "홈",
+    "businessHours": "영업 시간",
+    "businessHoursValue": "09:00 - 18:00 (GMT+9)",
+    "lunch": "점심: 12:00 - 13:00",
+    "closed": "휴무: 토요일 / 일요일",
+    "location": "위치",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관",
+    "rights": "All rights reserved."
+  }
+}

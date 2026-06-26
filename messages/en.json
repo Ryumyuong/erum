@@ -1,0 +1,185 @@
+{
+  "brand": {
+    "name": "BOXDLE",
+    "tagline": "Your custom packaging partner for bakery, cafe, dessert and food brands."
+  },
+  "nav": {
+    "about": "About",
+    "portfolio": "Portfolio",
+    "guide": "Custom Guide",
+    "faq": "FAQ",
+    "glossary": "Glossary",
+    "blog": "Blog",
+    "quote": "Get a Quote"
+  },
+  "header": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "common": {
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "contactUs": "Contact us",
+    "readMore": "Read more",
+    "search": "Search",
+    "loading": "Loading…",
+    "all": "All",
+    "noResults": "No results found."
+  },
+  "home": {
+    "heroTitle": "PACKAGING MADE TO BE REMEMBERED",
+    "heroSubtitle": "Premium custom packaging that helps your brand stay remembered.",
+    "heroCta": "Get a Quote",
+    "scroll": "SCROLL",
+    "portfolioHeading": "Portfolio",
+    "portfolioViewAll": "View all projects",
+    "whyHeading": "Why work with us?",
+    "processHeading": "Production Process",
+    "processSubtitle": "Not sure where to start? We'll recommend the right options for you.",
+    "solutionHeading": "Custom Packaging Solution",
+    "guideCardTitle": "Custom Guide",
+    "guideCardDesc": "Learn the basics of structure, material and finishing before you start.",
+    "faqCardTitle": "FAQ",
+    "faqCardDesc": "Find answers about MOQ, lead time, design files, payment and more.",
+    "ctaHeading": "Ready to create custom packaging for your brand?"
+  },
+  "page": {
+    "about": {
+      "title": "Packaging expertise since 1984",
+      "subtitle": "We raise your brand value with packaging built on decades of know-how, trusted for export.",
+      "coreValues": "Core Values",
+      "story": "Our Story",
+      "storyBody": "We've spent decades manufacturing paper packaging, cartons and boxes — earning trust in markets from the U.S. to Asia. From design to production, we handle the full process in-house with deep responsibility for quality and delivery.",
+      "strengths": "Our Strengths",
+      "system": "System",
+      "gallery": "Factory & Equipment",
+      "clients": "Clients"
+    },
+    "guide": {
+      "title": "Custom Packaging Guide",
+      "subtitle": "Understand the basics of structure, material, printing and finishing before you start.",
+      "helpTitle": "Not sure which option to choose?",
+      "helpDesc": "Share a few details and our experts will recommend the best material, printing and finishing for your brand.",
+      "helpCta": "Ask an expert"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers about custom packaging, MOQ, lead time, design files, payment and production.",
+      "searchPlaceholder": "Search questions about MOQ, lead time, design files…",
+      "ctaHeading": "Ready to create custom packaging for your brand?",
+      "ctaQuote": "Get a Quote",
+      "ctaWhatsapp": "Chat on WhatsApp",
+      "ctaEmail": "Email us"
+    },
+    "glossary": {
+      "title": "Packaging Glossary",
+      "subtitle": "Clear explanations of printing, paper, structure and finishing terms.",
+      "searchPlaceholder": "Search terms like CMYK, spot color, folding carton…",
+      "related": "Related portfolio"
+    },
+    "blog": {
+      "title": "Packaging Insights",
+      "subtitle": "Guides, cases and production tips for growing brands."
+    },
+    "portfolio": {
+      "title": "Find production examples by box type",
+      "subtitle": "Filter by package form, use field, material, printing and finishing to see real custom references.",
+      "searchPlaceholder": "Search by item number, name, box type or material",
+      "results": "{count} references found",
+      "filter": "Filter",
+      "reset": "Reset",
+      "ctaHeading": "Found something similar to what you want?",
+      "ctaDesc": "Send us a reference product and we'll advise on feasibility and a quote.",
+      "ctaButton": "Inquire about a similar product",
+      "back": "Back to portfolio",
+      "detailQuote": "Inquire about this product",
+      "viewDetail": "View details",
+      "spec": {
+        "itemNo": "Item No.",
+        "type": "Type",
+        "form": "Form",
+        "dimensions": "Dimensions (L×W×H)",
+        "material": "Material",
+        "printing": "Printing",
+        "coating": "Coating",
+        "finishing": "Finishing"
+      }
+    },
+    "quote": {
+      "standardTitle": "Standard Quote Request",
+      "recommendedTitle": "Easy Quote Request",
+      "toRecommended": "Switch to easy request",
+      "toStandard": "Switch to standard request",
+      "recommendAll": "Recommend everything for me",
+      "recommendedIntro": "You don't need to know all the technical terms. Just share what you know and our experts will recommend the best options.",
+      "sourceProduct": "Inquiring about",
+      "section": {
+        "contact": "Contact information",
+        "product": "Product information",
+        "structure": "Box structure",
+        "quantitySize": "Quantity & size",
+        "material": "Material",
+        "printing": "Printing method",
+        "finishing": "Finishing options",
+        "additional": "Additional information",
+        "details": "Project details",
+        "nextSteps": "What happens next?"
+      },
+      "field": {
+        "company": "Company",
+        "contactName": "Contact name",
+        "email": "Email",
+        "phone": "Phone",
+        "productName": "Product name",
+        "productNamePh": "e.g. Chocolate cake, macaron set",
+        "category": "Product / Category",
+        "categoryPh": "e.g. Chocolate cake, macaron set, cookie box",
+        "quantity": "Quantity",
+        "quantityPh": "e.g. 500-1000",
+        "innerSize": "Inner size (mm)",
+        "width": "Width",
+        "depth": "Depth",
+        "height": "Height",
+        "designLink": "Reference image or design file (optional)",
+        "designLinkPh": "https://drive.google.com/... or https://dropbox.com/...",
+        "fileUpload": "Click to upload or drag files here",
+        "fileHint": "Images, PDF, AI files, etc.",
+        "budget": "Budget range (optional)",
+        "budgetPh": "e.g. $1,000 - $3,000",
+        "leadTime": "Preferred lead time (optional)",
+        "leadTimePh": "e.g. within 4 weeks",
+        "message": "Additional requests / notes",
+        "messagePh": "Tell us any specific requirements, structure, references…",
+        "requirements": "Tell us about your product and packaging needs",
+        "requirementsPh": "Tell us:\n- What product are you packaging?\n- Approximate size (if known)\n- Design preference or brand guidelines\n- Preferred lead time\n- Budget range (if any)",
+        "optional": "optional"
+      },
+      "nextStep": {
+        "one": "A packaging expert reviews your request",
+        "two": "We recommend the best material, structure and printing",
+        "three": "You receive a detailed quote within 2-3 business days"
+      },
+      "submit": "Submit inquiry",
+      "submitting": "Submitting…",
+      "successTitle": "Your inquiry has been received",
+      "successBody": "Thank you. A packaging expert will review your request and get back to you within 2-3 business days.",
+      "successAnother": "Submit another inquiry",
+      "errorRequired": "Please fill in all required fields.",
+      "errorGeneric": "Something went wrong. Please try again."
+    }
+  },
+  "footer": {
+    "menu": "Menu",
+    "resources": "Resources",
+    "contact": "Contact",
+    "home": "Home",
+    "businessHours": "Business hours",
+    "businessHoursValue": "09:00 - 18:00 (GMT+9)",
+    "lunch": "Lunch: 12:00 - 13:00",
+    "closed": "Closed: Sat / Sun",
+    "location": "Location",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "rights": "All rights reserved."
+  }
+}

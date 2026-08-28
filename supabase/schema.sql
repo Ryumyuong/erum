@@ -42,6 +42,10 @@ create table if not exists inquiry (
   contact_name    text not null,
   email           text not null,
   phone           text not null,
+  city            text,
+  country         text,
+  category        text,
+  hear_about      text[],
   product         text default '',
   quantity        text default '',
   source_item_no  text,
@@ -54,9 +58,11 @@ create table if not exists inquiry (
   size_d          text,
   size_h          text,
   design_link     text,
+  design_needed   text check (design_needed is null or design_needed in ('yes','no')),
   budget          text,
   lead_time       text,
   message         text,
+  files           text[] not null default '{}',
   locale          text default 'en',
   status          text not null default 'new' check (status in ('new','reviewing','quoted')),
   created_at      timestamptz not null default now()
@@ -136,7 +142,6 @@ create table if not exists site_settings (
   ceo_kr        text default '',
   email         text default '',
   phone         text default '',
-  whatsapp      text default '',
   biz_no        text default '',
   address_en    text default '',
   address_kr    text default '',
@@ -146,6 +151,37 @@ create table if not exists site_settings (
 );
 
 insert into site_settings (id) values (1) on conflict (id) do nothing;
+
+-- ------------------------------------------------------------
+-- updated_at tracking (powers the admin "recent activity" feed)
+-- Idempotent: safe to run on a fresh or existing database.
+-- ------------------------------------------------------------
+create or replace function set_updated_at() returns trigger
+  language plpgsql as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+do $$
+declare t text;
+begin
+  foreach t in array array['portfolio','faq','glossary','blog','inquiry','site_settings']
+  loop
+    execute format('alter table %I add column if not exists updated_at timestamptz not null default now();', t);
+    execute format('drop trigger if exists %I_set_updated_at on %I;', t, t);
+    -- backfill existing rows while no trigger is active (so it's not re-stamped);
+    -- skip tables without a created_at column (e.g. site_settings)
+    if exists (
+      select 1 from information_schema.columns
+      where table_schema = 'public' and table_name = t and column_name = 'created_at'
+    ) then
+      execute format('update %I set updated_at = created_at;', t);
+    end if;
+    execute format('create trigger %I_set_updated_at before update on %I for each row execute function set_updated_at();', t, t);
+  end loop;
+end $$;
 
 -- ------------------------------------------------------------
 -- Row Level Security
@@ -205,6 +241,12 @@ drop policy if exists "media admin write" on storage.objects;
 create policy "media admin write" on storage.objects
   for all to authenticated
   using (bucket_id = 'media') with check (bucket_id = 'media');
+
+-- Public visitors may upload reference files into the inquiries/ folder only.
+drop policy if exists "media public upload to inquiries" on storage.objects;
+create policy "media public upload to inquiries" on storage.objects
+  for insert to anon, authenticated
+  with check (bucket_id = 'media' and (storage.foldername(name))[1] = 'inquiries');
 
 -- Helpful indexes
 create index if not exists portfolio_sort_idx on portfolio (sort, created_at desc);

@@ -14,6 +14,7 @@ export type BlogPost = {
   category: string;
   title: L;
   summary: L;
+  body?: L; // rich-text HTML body
   date: string; // ISO
   tone: string;
   cover?: string; // real cover image URL when available

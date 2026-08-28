@@ -15,7 +15,7 @@ export default async function SettingsPage() {
 
   return (
     <AdminShell>
-      <div className="mx-auto max-w-3xl px-6 py-12">
+      <div className="container-admin pt-12 pb-12 desktop:pt-44 desktop:pb-44">
         <AdminPageHeader title="사이트 설정" />
         <SettingsForm initial={initial} />
       </div>

@@ -6,41 +6,63 @@ import type { L } from "@/lib/content";
  * `tbd: true` = values not finalized by the client yet.
  */
 export type FilterGroupId =
-  | "useField"
-  | "material"
-  | "packageType"
   | "packageForm"
-  | "printing";
+  | "useField"
+  | "packageType"
+  | "material"
+  | "printMethod"
+  | "printing"
+  | "coating"
+  | "finishing"
+  | "accessories";
 
-export type FilterOption = { id: string; label: L };
+export type FilterOption = { id: string; label: L; image?: string };
 export type FilterGroup = {
   id: FilterGroupId;
   label: L;
   options: FilterOption[];
   tbd?: boolean;
+  /** Kept for label lookups (e.g. card pill) but not rendered in the sidebar. */
+  hidden?: boolean;
 };
 
 export const portfolioFilters: FilterGroup[] = [
   {
-    id: "useField",
-    label: { en: "Use Field", ko: "사용 분야" },
+    id: "packageForm",
+    label: { en: "Package Form", ko: "패키지형태" },
     options: [
-      { id: "food", label: { en: "Food", ko: "식품" } },
-      { id: "dessert-cafe", label: { en: "Dessert & Cafe", ko: "디저트·카페" } },
-      { id: "pharma", label: { en: "Pharmaceutical", ko: "제약" } },
-      { id: "cosmetics", label: { en: "Cosmetics", ko: "화장품" } },
-      { id: "lifestyle", label: { en: "Lifestyle & Goods", ko: "생활·소품" } },
+      { id: "type-a", label: { en: "Type A", ko: "A형" }, image: "/filters/package-form/type-a.png" },
+      { id: "type-b", label: { en: "Type B", ko: "B형" }, image: "/filters/package-form/type-b.png" },
+      { id: "type-c", label: { en: "Type C", ko: "C형" }, image: "/filters/package-form/type-c.png" },
+      { id: "type-g", label: { en: "Type G", ko: "G형" }, image: "/filters/package-form/type-g.png" },
+      { id: "type-m", label: { en: "Type M", ko: "M형" }, image: "/filters/package-form/type-m.png" },
+      { id: "type-r", label: { en: "Type R", ko: "R형" }, image: "/filters/package-form/type-r.png" },
+      { id: "type-rrp", label: { en: "Type RRP", ko: "RRP형" }, image: "/filters/package-form/type-rrp.png" },
+      { id: "sleeve", label: { en: "Sleeve", ko: "슬리브" }, image: "/filters/package-form/sleeve.png" },
+      { id: "type-y", label: { en: "Type Y", ko: "Y형" }, image: "/filters/package-form/type-y.png" },
+      { id: "envelope", label: { en: "Envelope", ko: "봉투형" }, image: "/filters/package-form/envelope.png" },
+      { id: "rigid", label: { en: "Rigid (Set-up)", ko: "싸바리형" }, image: "/filters/package-form/rigid.png" },
+      { id: "paper-handle", label: { en: "Paper Handle", ko: "종이손잡이형" }, image: "/filters/package-form/paper-handle.png" },
+      { id: "custom", label: { en: "Custom", ko: "커스텀형" }, image: "/filters/package-form/custom.png" },
+      { id: "shopping-bag", label: { en: "Shopping Bag", ko: "쇼핑백" }, image: "/filters/package-form/shopping-bag.png" },
+      { id: "poly-bag", label: { en: "Poly Bag", ko: "비닐백" }, image: "/filters/package-form/poly-bag.png" },
+      { id: "deco-etc", label: { en: "Deco & Etc", ko: "데코·기타" }, image: "/filters/package-form/deco-etc.png" },
     ],
   },
   {
-    id: "material",
-    label: { en: "Material", ko: "지류·재질" },
+    id: "useField",
+    label: { en: "Use Field", ko: "사용분야" },
     options: [
-      { id: "uncoated", label: { en: "Uncoated Paper", ko: "비도공지" } },
-      { id: "coated", label: { en: "Coated Paper", ko: "도공지" } },
-      { id: "kraft", label: { en: "Kraft Paper", ko: "크라프트지" } },
-      { id: "specialty", label: { en: "Specialty Paper", ko: "특수지" } },
-      { id: "eco", label: { en: "Eco Paper", ko: "친환경지" } },
+      { id: "food", label: { en: "Food", ko: "식품" } },
+      { id: "bakery-cafe", label: { en: "Bakery & Cafe", ko: "베이커리·카페" } },
+      { id: "beverage", label: { en: "Beverage & Liquor", ko: "주류·액체류" } },
+      { id: "pharma-bio", label: { en: "Pharma & Bio", ko: "의약·바이오" } },
+      { id: "beauty", label: { en: "Beauty", ko: "뷰티" } },
+      { id: "fashion", label: { en: "Fashion & Goods", ko: "패션·잡화" } },
+      { id: "electronics", label: { en: "Electronics & IT", ko: "전자·IT" } },
+      { id: "household", label: { en: "Household", ko: "생활용품" } },
+      { id: "sports", label: { en: "Sports", ko: "스포츠" } },
+      { id: "pet-kids", label: { en: "Pet & Kids", ko: "반려동물·키즈" } },
     ],
   },
   {
@@ -50,34 +72,89 @@ export const portfolioFilters: FilterGroup[] = [
       { id: "folding-carton", label: { en: "Folding Carton", ko: "단상자(종이)" } },
       { id: "rigid-box", label: { en: "Rigid Box", ko: "싸바리상자" } },
       { id: "corrugated", label: { en: "Corrugated Box", ko: "골판지상자" } },
-      { id: "custom", label: { en: "Custom Form", ko: "커스텀 형태" } },
+      { id: "custom-form", label: { en: "Custom Form", ko: "커스텀 형태" } },
       { id: "shopping-bag", label: { en: "Shopping Bag", ko: "쇼핑백" } },
       { id: "etc", label: { en: "Other (Sticker etc.)", ko: "기타(스티커 등)" } },
     ],
   },
   {
-    id: "packageForm",
-    label: { en: "Package Form", ko: "패키지 형태" },
+    id: "material",
+    label: { en: "Print Material", ko: "인쇄재" },
     options: [
-      { id: "tuck-top", label: { en: "Tuck Top", ko: "덮개형" } },
-      { id: "handle", label: { en: "Handle Box", ko: "손잡이형" } },
-      { id: "auto-lock", label: { en: "Auto-lock", ko: "자동 바닥" } },
-      { id: "window", label: { en: "Window Box", ko: "윈도우형" } },
-      { id: "sleeve", label: { en: "Sleeve", ko: "슬리브형" } },
-      { id: "hd-bag", label: { en: "HD Bag", ko: "비닐백(HD BAG)" } },
-      { id: "sticker-deco", label: { en: "Sticker & Deco", ko: "스티커·데코" } },
+      { id: "uncoated", label: { en: "Uncoated Paper", ko: "비도공지" } },
+      { id: "coated", label: { en: "Coated Paper", ko: "도공지" } },
+      { id: "kraft", label: { en: "Kraft Paper", ko: "크라프트지" } },
+      { id: "specialty", label: { en: "Specialty Paper", ko: "특수지" } },
+      { id: "eco", label: { en: "Eco Paper", ko: "친환경지" } },
+    ],
+  },
+  {
+    id: "printMethod",
+    label: { en: "Print Method", ko: "인쇄방식" },
+    options: [
+      { id: "offset", label: { en: "Offset", ko: "옵셋 인쇄" } },
+      { id: "digital", label: { en: "Digital", ko: "디지털 인쇄" } },
+      { id: "flexo", label: { en: "Flexo", ko: "플렉소 인쇄" } },
+      { id: "silk", label: { en: "Silk Screen", ko: "실크 인쇄" } },
+      { id: "gravure", label: { en: "Gravure", ko: "그라비어 인쇄" } },
     ],
   },
   {
     id: "printing",
-    label: { en: "Printing", ko: "인쇄 방식" },
-    tbd: true,
+    label: { en: "Print Colors", ko: "인쇄도수" },
     options: [
-      { id: "cmyk", label: { en: "CMYK (4-Color)", ko: "4도(CMYK)" } },
-      { id: "spot", label: { en: "Spot Color", ko: "별색" } },
-      { id: "soy", label: { en: "Soy-based Ink", ko: "콩기름 인쇄" } },
+      { id: "black", label: { en: "Black (K)", ko: "먹색" }, image: "/filters/print-colors/black.png" },
+      { id: "white", label: { en: "White", ko: "백색" }, image: "/filters/print-colors/white.png" },
+      { id: "color", label: { en: "Color (CMYK)", ko: "컬러" }, image: "/filters/print-colors/color.png" },
+      { id: "spot", label: { en: "Spot Color", ko: "별색" }, image: "/filters/print-colors/spot.png" },
+      { id: "color-spot", label: { en: "Color + Spot", ko: "컬러+별색" }, image: "/filters/print-colors/color-spot.png" },
     ],
   },
+  {
+    id: "coating",
+    label: { en: "Coating", ko: "코팅" },
+    options: [
+      { id: "matte", label: { en: "Matte Coating", ko: "무광 코팅" } },
+      { id: "gloss", label: { en: "Gloss Coating", ko: "유광 코팅" } },
+      { id: "soft-touch", label: { en: "Soft Touch", ko: "소프트터치" } },
+      { id: "hologram", label: { en: "Hologram", ko: "홀로그램" } },
+      { id: "none", label: { en: "No Coating", ko: "무코팅" } },
+    ],
+  },
+  {
+    id: "finishing",
+    label: { en: "Finishing", ko: "후가공" },
+    options: [
+      { id: "gold-foil", label: { en: "Gold Foil", ko: "금박" } },
+      { id: "silver-foil", label: { en: "Silver Foil", ko: "은박" } },
+      { id: "emboss", label: { en: "Embossing", ko: "엠보싱" } },
+      { id: "deboss", label: { en: "Debossing", ko: "형압" } },
+      { id: "spot-uv", label: { en: "Spot UV", ko: "부분 UV" } },
+      { id: "die-cut", label: { en: "Die-cut", ko: "도무송" } },
+    ],
+  },
+  {
+    id: "accessories",
+    label: { en: "Accessories", ko: "부자재" },
+    options: [
+      { id: "ribbon", label: { en: "Ribbon", ko: "리본" } },
+      { id: "handle", label: { en: "Handle", ko: "손잡이" } },
+      { id: "magnet", label: { en: "Magnet", ko: "자석" } },
+      { id: "window", label: { en: "Window (PVC)", ko: "창(PVC)" } },
+      { id: "cushion", label: { en: "Cushioning", ko: "완충재" } },
+      { id: "sticker", label: { en: "Sticker", ko: "스티커" } },
+    ],
+  },
+];
+
+/** Finishing keywords → option id, derived from each item's coating/finishing text. */
+const FINISH_KEYWORDS: { id: string; ko: string[] }[] = [
+  { id: "matte", ko: ["무광"] },
+  { id: "gloss", ko: ["유광"] },
+  { id: "gold-foil", ko: ["금박"] },
+  { id: "silver-foil", ko: ["은박"] },
+  { id: "emboss", ko: ["엠보싱"] },
+  { id: "spot-uv", ko: ["부분 UV", "부분UV", "UV"] },
 ];
 
 export type PortfolioItem = {
@@ -95,6 +172,12 @@ export type PortfolioItem = {
   dims: { l: number; w: number; h: number }; // mm
   tone: string; // placeholder background until real images arrive
   thumbnail?: string; // real image URL (Supabase Storage) when available
+  images?: string[]; // additional gallery images (Supabase Storage)
+  useFieldLabel?: L; // resolved 사용분야 label
+  /** Guide-driven category selections: { [section_key]: [guide_item_id, ...] } */
+  categories?: Record<string, string[]>;
+  /** `categories` resolved to guide section + item labels (for card/detail display). */
+  categoryLabels?: { key: string; label: L; values: L[] }[];
 };
 
 /**
@@ -288,6 +371,18 @@ export function getFilterLabel(groupId: FilterGroupId, optionId: string): L | un
   return portfolioFilters
     .find((g) => g.id === groupId)
     ?.options.find((o) => o.id === optionId)?.label;
+}
+
+/** Finishing option ids contained in a 국문 finishing/coating text blob. */
+export function finishingIdsFromText(ko: string): string[] {
+  return FINISH_KEYWORDS.filter((f) => f.ko.some((k) => ko.includes(k))).map(
+    (f) => f.id,
+  );
+}
+
+/** Finishing option ids for an item, derived from its coating/finishing text. */
+export function getFinishingIds(item: PortfolioItem): string[] {
+  return finishingIdsFromText(`${item.coating.ko} ${item.finishing.ko}`);
 }
 
 export function getPortfolioByItemNo(itemNo: string): PortfolioItem | undefined {

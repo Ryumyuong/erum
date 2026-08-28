@@ -6,11 +6,13 @@ export type GuideItem = {
   desc: L;
   tip?: L; // purple expert comment
   tone: string;
+  image?: string; // admin-uploaded image (first of images[]); falls back to tone
 };
 
 export type GuideSection = {
   id: string;
   title: L;
+  description?: L; // 2–3 line intro shown under the section title
   items: GuideItem[];
 };
 
@@ -18,6 +20,10 @@ export const guideSections: GuideSection[] = [
   {
     id: "package-types",
     title: { en: "Package Types", ko: "패키지 종류" },
+    description: {
+      en: "Choose the box type that fits your product. The type shapes the form, assembly and use of your packaging — pick the one that suits your product to build the ideal box.",
+      ko: "제품에 맞는 박스 종류를 선택해 보세요. 박스 종류에 따라 형태와 조립 방식, 활용도가 달라집니다. 제품 특성과 용도에 맞는 종류를 골라 최적의 패키지를 제작해 보세요!",
+    },
     items: [
       {
         title: { en: "Folding Carton", ko: "단상자" },
@@ -42,6 +48,10 @@ export const guideSections: GuideSection[] = [
   {
     id: "box-structures",
     title: { en: "Box Structures", ko: "박스 구조" },
+    description: {
+      en: "Choose how your box opens and closes. Structures like tuck-top or handle boxes change ease of use and how well the product is protected.",
+      ko: "박스를 여닫는 구조를 선택해 보세요. 덮개형·손잡이형 등 구조에 따라 사용 편의성과 제품을 보호하는 정도가 달라집니다.",
+    },
     items: [
       {
         title: { en: "Tuck Top", ko: "덮개형" },
@@ -66,6 +76,10 @@ export const guideSections: GuideSection[] = [
   {
     id: "paper-materials",
     title: { en: "Paper & Materials", ko: "지류·재질" },
+    description: {
+      en: "Choose your paper stock. Paper varies in weight, thickness, gloss, surface texture and color — the right choice helps your packaging express your product's image.",
+      ko: "종이 재질을 선택해 보세요. 종이는 무게, 두께, 광택정도, 표면 거칠기, 색상 등 다양한 특성을 가지고 있습니다. 종이 선택을 통해 내 제품의 이미지를 더욱 잘 나타낼 수 있는 패키지를 제작해 보세요!",
+    },
     items: [
       {
         title: { en: "Coated Paper (White)", ko: "백색 도공지" },
@@ -90,6 +104,10 @@ export const guideSections: GuideSection[] = [
   {
     id: "printing",
     title: { en: "Printing", ko: "인쇄" },
+    description: {
+      en: "Choose your printing method. Options like CMYK process or spot colors change how colors appear and how accurately your brand color is reproduced.",
+      ko: "인쇄 방식을 선택해 보세요. CMYK·별색 등 인쇄 방식에 따라 색 표현과 브랜드 컬러의 재현 정도가 달라집니다.",
+    },
     items: [
       {
         title: { en: "CMYK (4-Color Process)", ko: "CMYK (4도 프로세스)" },
@@ -122,6 +140,10 @@ export const guideSections: GuideSection[] = [
   {
     id: "finishing",
     title: { en: "Finishing", ko: "후가공" },
+    description: {
+      en: "Choose your finishing options. Coating, foil stamping, embossing and more add surface texture and a premium feel to your packaging.",
+      ko: "후가공 옵션을 선택해 보세요. 코팅·박·엠보싱 등 후가공으로 표면 질감과 고급스러움을 더할 수 있습니다.",
+    },
     items: [
       {
         title: { en: "Matte Coating", ko: "무광 코팅" },

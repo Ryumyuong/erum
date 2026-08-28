@@ -1,16 +1,21 @@
-import Link from "next/link";
 import { AdminShell, AdminPageHeader } from "@/components/admin/AdminShell";
+import { LanguageManager, type LangPage } from "@/components/admin/LanguageManager";
 import { createClient } from "@/lib/supabase/server";
+import enMessages from "../../../../messages/en.json";
+import koMessages from "../../../../messages/ko.json";
 
 export const dynamic = "force-dynamic";
 
-type Check = {
-  label: string;
-  href: string;
-  total: number;
-  missingEn: number;
-  missingKr: number;
-};
+const blank = (v: unknown) => !v || String(v).trim() === "";
+
+// Pull a nested namespace subtree (e.g. "page.about") out of a messages object.
+function ns(obj: unknown, dot: string): Record<string, unknown> {
+  let cur: unknown = obj;
+  for (const k of dot.split(".")) {
+    cur = (cur as Record<string, unknown> | undefined)?.[k];
+  }
+  return (cur as Record<string, unknown>) ?? {};
+}
 
 export default async function LanguagePage() {
   const supabase = await createClient();
@@ -23,89 +28,57 @@ export default async function LanguagePage() {
     supabase.from("guide_item").select("title_en, title_kr, desc_en, desc_kr"),
   ]);
 
-  const blank = (v: unknown) => !v || String(v).trim() === "";
-
-  const checks: Check[] = [
-    {
-      label: "포트폴리오",
-      href: "/admin/portfolio",
-      total: portfolio.data?.length ?? 0,
-      missingEn: (portfolio.data ?? []).filter((r) => blank(r.name_en)).length,
-      missingKr: (portfolio.data ?? []).filter((r) => blank(r.name_kr)).length,
-    },
-    {
-      label: "FAQ",
-      href: "/admin/faq",
-      total: faq.data?.length ?? 0,
-      missingEn: (faq.data ?? []).filter((r) => blank(r.q_en) || blank(r.a_en)).length,
-      missingKr: (faq.data ?? []).filter((r) => blank(r.q_kr) || blank(r.a_kr)).length,
-    },
-    {
-      label: "용어사전",
-      href: "/admin/glossary",
-      total: glossary.data?.length ?? 0,
-      missingEn: (glossary.data ?? []).filter((r) => blank(r.term_en) || blank(r.desc_en)).length,
-      missingKr: (glossary.data ?? []).filter((r) => blank(r.term_kr) || blank(r.desc_kr)).length,
-    },
-    {
-      label: "블로그",
-      href: "/admin/blog",
-      total: blog.data?.length ?? 0,
-      missingEn: (blog.data ?? []).filter((r) => blank(r.title_en)).length,
-      missingKr: (blog.data ?? []).filter((r) => blank(r.title_kr)).length,
-    },
-    {
-      label: "제작가이드",
-      href: "/admin/guide",
-      total: guide.data?.length ?? 0,
-      missingEn: (guide.data ?? []).filter((r) => blank(r.title_en) || blank(r.desc_en)).length,
-      missingKr: (guide.data ?? []).filter((r) => blank(r.title_kr) || blank(r.desc_kr)).length,
-    },
-  ];
-
-  function status(missing: number) {
-    return missing === 0 ? (
-      <span className="font-medium text-green-600">완료</span>
-    ) : (
-      <span className="font-medium text-red-500">{missing}개 누락</span>
-    );
+  // A page is "complete" for a locale when no row is missing that locale's text.
+  function none<T>(rows: T[] | null, pred: (r: T) => boolean) {
+    return !(rows ?? []).some(pred);
   }
+
+  const pages: LangPage[] = [
+    { name: "Home", nsKey: "home", en: true, kr: true },
+    { name: "About", nsKey: "page.about", en: true, kr: true },
+    {
+      name: "Portfolio",
+      nsKey: "page.portfolio",
+      en: none(portfolio.data, (r) => blank(r.name_en)),
+      kr: none(portfolio.data, (r) => blank(r.name_kr)),
+    },
+    {
+      name: "Custom Guide",
+      nsKey: "page.guide",
+      en: none(guide.data, (r) => blank(r.title_en) || blank(r.desc_en)),
+      kr: none(guide.data, (r) => blank(r.title_kr) || blank(r.desc_kr)),
+    },
+    {
+      name: "FAQ",
+      nsKey: "page.faq",
+      en: none(faq.data, (r) => blank(r.q_en) || blank(r.a_en)),
+      kr: none(faq.data, (r) => blank(r.q_kr) || blank(r.a_kr)),
+    },
+    {
+      name: "Glossary",
+      nsKey: "page.glossary",
+      en: none(glossary.data, (r) => blank(r.term_en) || blank(r.desc_en)),
+      kr: none(glossary.data, (r) => blank(r.term_kr) || blank(r.desc_kr)),
+    },
+    {
+      name: "Blog",
+      nsKey: "page.blog",
+      en: none(blog.data, (r) => blank(r.title_en)),
+      kr: none(blog.data, (r) => blank(r.title_kr)),
+    },
+    { name: "Contact", nsKey: "footer", en: true, kr: true },
+  ].map(({ nsKey, ...rest }) => ({
+    ...rest,
+    ns: nsKey,
+    enData: ns(enMessages, nsKey),
+    koData: ns(koMessages, nsKey),
+  }));
 
   return (
     <AdminShell>
-      <div className="mx-auto max-w-3xl px-6 py-12">
-        <AdminPageHeader title="언어 콘텐츠 관리" />
-        <p className="mb-6 text-sm text-muted">
-          각 콘텐츠의 영문(EN)·국문(KR) 입력 상태입니다. 누락 항목은 해당 관리 화면에서 채워주세요.
-        </p>
-        <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-          <table className="w-full text-left text-sm">
-            <thead className="border-b border-line text-xs text-faint">
-              <tr>
-                <th className="px-4 py-3 font-medium">콘텐츠</th>
-                <th className="px-4 py-3 font-medium">전체</th>
-                <th className="px-4 py-3 font-medium">EN 상태</th>
-                <th className="px-4 py-3 font-medium">KR 상태</th>
-                <th className="px-4 py-3 text-right font-medium">관리</th>
-              </tr>
-            </thead>
-            <tbody>
-              {checks.map((c) => (
-                <tr key={c.href} className="border-b border-line last:border-0">
-                  <td className="px-4 py-3 font-medium">{c.label}</td>
-                  <td className="px-4 py-3 text-muted">{c.total}</td>
-                  <td className="px-4 py-3">{status(c.missingEn)}</td>
-                  <td className="px-4 py-3">{status(c.missingKr)}</td>
-                  <td className="px-4 py-3 text-right">
-                    <Link href={c.href} className="text-brand hover:underline">
-                      편집
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="container-admin pt-12 pb-12 desktop:pt-44 desktop:pb-44">
+        <AdminPageHeader title="Language Content Manager" />
+        <LanguageManager pages={pages} />
       </div>
     </AdminShell>
   );

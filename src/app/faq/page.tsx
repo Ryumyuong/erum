@@ -1,49 +1,63 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
+import { getLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { FaqList } from "@/components/faq/FaqList";
-import { QUOTE_HREF, siteContact } from "@/lib/site";
-import { getFaqItems } from "@/lib/db/queries";
+import { CtaBand } from "@/components/CtaBand";
+import { JsonLd } from "@/components/JsonLd";
+import { pick } from "@/lib/content";
+import { getFaqItems, getFaqCategories } from "@/lib/db/queries";
+
+
+export async function generateMetadata(): Promise<Metadata> {
+  const ko = (await getLocale()) === "ko";
+  return pageMeta({
+    title: ko ? "자주 묻는 질문" : "Frequently Asked Questions",
+    description: ko ? "최소 주문 수량, 제작 기간, 배송, 샘플, 불량 처리 등 맞춤 패키지 제작에 대해 자주 묻는 질문을 모았습니다." : "Minimum order quantity, lead time, shipping, samples and quality — common questions about custom packaging.",
+    path: "/faq",
+  });
+}
 
 export default async function FaqPage() {
   const t = await getTranslations("page.faq");
-  const items = await getFaqItems();
+  const locale = await getLocale();
+  const [items, categories] = await Promise.all([
+    getFaqItems(),
+    getFaqCategories(),
+  ]);
+
+  // FAQPage schema — the question/answer pairs in the locale being served.
+  // Entries missing either side are dropped; an incomplete pair invalidates
+  // the whole block for validators.
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items
+      .map((item) => ({
+        q: pick(item.q, locale).trim(),
+        a: pick(item.a, locale).trim(),
+      }))
+      .filter(({ q, a }) => q && a)
+      .map(({ q, a }) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+  };
 
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
-      <FaqList items={items} />
+      {faqSchema.mainEntity.length > 0 && <JsonLd data={faqSchema} />}
+      <PageHeader
+        title={t("title")}
+        subtitle={t("subtitle")}
+        subtitleSize="text-[min(4.13vw,17px)] max-[500px]:text-[min(3.4vw,14.28px)] desktop:text-[1rem]"
+      />
+      <FaqList items={items} categories={categories} />
 
-      {/* CTA band */}
-      <section className="mt-16 bg-cream">
-        <div className="container-page flex flex-col items-center gap-6 py-16 text-center">
-          <h2 className="max-w-2xl text-2xl font-bold md:text-3xl">
-            {t("ctaHeading")}
-          </h2>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={QUOTE_HREF}
-              className="inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
-            >
-              {t("ctaQuote")}
-            </Link>
-            <a
-              href={`https://wa.me/${siteContact.whatsapp.replace(/[^0-9]/g, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-ink"
-            >
-              {t("ctaWhatsapp")}
-            </a>
-            <a
-              href={`mailto:${siteContact.email}`}
-              className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy"
-            >
-              {t("ctaEmail")}
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* CTA band (shared, same as home) */}
+      <CtaBand />
     </>
   );
 }

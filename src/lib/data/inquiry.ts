@@ -6,6 +6,17 @@ export type InquiryPayload = {
   contactName: string;
   email: string;
   phone: string;
+  city?: string;
+  country?: string;
+  category?: string;
+  hearAbout?: string[];
+  designNeeded?: "yes" | "no";
+  /** Every option answer: { group: { id, label, note } }. */
+  spec?: Record<string, { id: string; label: string; note?: string }>;
+  privacyAgreed?: boolean;
+  promoAgreed?: boolean;
+  priority?: string;
+  containsProduct?: string;
   product: string;
   quantity: string;
   sourceItemNo?: string;
@@ -19,6 +30,7 @@ export type InquiryPayload = {
   budget?: string;
   leadTime?: string;
   message?: string;
+  files?: string[];
   locale: string;
 };
 

@@ -3,11 +3,10 @@ import type { L } from "@/lib/content";
 export type GlossaryCategory = { id: string; label: L };
 
 export const glossaryCategories: GlossaryCategory[] = [
-  { id: "printing", label: { en: "Printing", ko: "인쇄" } },
-  { id: "paperboard", label: { en: "Paper & Board", ko: "판지" } },
   { id: "structure", label: { en: "Box Structure", ko: "지기구조" } },
+  { id: "paperboard", label: { en: "Paper & Material", ko: "지류·재질" } },
+  { id: "printing", label: { en: "Printing", ko: "인쇄" } },
   { id: "finishing", label: { en: "Finishing", ko: "후가공" } },
-  { id: "packaging", label: { en: "Packaging Material", ko: "포장재" } },
 ];
 
 export type GlossaryTerm = {
@@ -17,6 +16,10 @@ export type GlossaryTerm = {
   desc: L;
   tags: L[];
   relatedPortfolioIds: string[];
+  image?: string; // admin-uploaded image (first of images[]); falls back to a tone
+  images?: string[]; // full gallery of admin-uploaded images
+  whenUsed?: L; // "어떤 경우에 사용하나요?"
+  recommendedFor?: L; // "추천 분야"
 };
 
 export const glossaryTerms: GlossaryTerm[] = [

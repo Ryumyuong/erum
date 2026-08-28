@@ -1,83 +1,108 @@
+import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
+import { getLocale } from "next-intl/server";
+import { Fragment } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Thumb } from "@/components/ui/Thumb";
+import { GuideNav } from "@/components/guide/GuideNav";
+import { GuideSections } from "@/components/guide/GuideSections";
 import { ArrowRightIcon } from "@/components/icons";
-import { pick } from "@/lib/content";
 import { QUOTE_HREF } from "@/lib/site";
 import { getGuideSections } from "@/lib/db/queries";
 
+
+export async function generateMetadata(): Promise<Metadata> {
+  const ko = (await getLocale()) === "ko";
+  return pageMeta({
+    title: ko ? "제작가이드 — 패키지 종류와 구조 안내" : "Production Guide — Packaging types and structures",
+    description: ko ? "패키지 종류, 박스 구조, 지류·재질, 인쇄 방식, 후가공까지 맞춤 패키지 제작에 필요한 기본 지식을 정리했습니다." : "Package types, box structures, paper and materials, printing and finishing — the basics of custom packaging.",
+    path: "/guide",
+  });
+}
+
 export default async function GuidePage() {
   const t = await getTranslations("page.guide");
-  const locale = await getLocale();
   const guideSections = await getGuideSections();
 
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
+      <PageHeader
+        title={t("title")}
+        subtitle={t("subtitle")}
+        subtitleSize="text-[min(4.13vw,17px)] max-[500px]:text-[min(3.4vw,14.28px)] desktop:text-[1rem]"
+      />
 
-      <div className="container-page grid gap-10 pb-12 lg:grid-cols-[200px_1fr]">
-        {/* In-page nav */}
-        <nav className="hidden lg:block">
-          <ul className="sticky top-[calc(var(--spacing-header)+1.5rem)] space-y-1">
-            {guideSections.map((section) => (
-              <li key={section.id}>
-                <a
-                  href={`#${section.id}`}
-                  className="block rounded-md px-3 py-2 text-sm font-medium text-muted hover:bg-cream hover:text-ink"
-                >
-                  {pick(section.title, locale)}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <div className="container-page grid gap-10 pb-32 desktop:grid-cols-[200px_1fr]">
+        {/* In-page nav (sticky, scroll-spy) */}
+        <GuideNav
+          sections={guideSections.map((s) => ({ id: s.id, title: s.title }))}
+        />
 
-        {/* Sections */}
-        <div className="space-y-16">
-          {guideSections.map((section) => (
-            <section key={section.id} id={section.id} className="scroll-mt-28">
-              <h2 className="mb-6 border-b border-line pb-3 text-xl font-bold md:text-2xl">
-                {pick(section.title, locale)}
-              </h2>
-              <div className="grid gap-8 sm:grid-cols-2">
-                {section.items.map((item, i) => (
-                  <article key={i}>
-                    <Thumb tone={item.tone} ratio="video" />
-                    <div className="mt-3 flex items-baseline gap-2">
-                      <h3 className="font-semibold">{pick(item.title, locale)}</h3>
-                      {item.subtitle && (
-                        <span className="text-xs text-brand">{item.subtitle}</span>
-                      )}
-                    </div>
-                    <p className="mt-1 text-sm leading-relaxed text-muted">
-                      {pick(item.desc, locale)}
-                    </p>
-                    {item.tip && (
-                      <p className="mt-2 text-sm font-medium text-violet-600">
-                        {pick(item.tip, locale)}
-                      </p>
-                    )}
-                  </article>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
+        {/* Sections — desktop stack + scroll-spy; mobile tabs */}
+        <GuideSections sections={guideSections} />
       </div>
 
       {/* Help CTA */}
-      <section className="bg-cream">
-        <div className="container-page flex flex-col items-center gap-4 py-16 text-center">
-          <h2 className="text-2xl font-bold">{t("helpTitle")}</h2>
-          <p className="max-w-xl text-sm text-muted">{t("helpDesc")}</p>
-          <Link
-            href={QUOTE_HREF}
-            className="mt-2 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
-          >
-            {t("helpCta")}
-            <ArrowRightIcon className="h-4 w-4" />
-          </Link>
+      <section>
+        <div className="rounded-[var(--radius-card)] bg-[#FCF8F6]">
+          <div className="flex flex-col items-center px-[15.29vw] desktop:px-6 py-24 text-center">
+          <h2 className="text-[min(6.31vw,26px)] max-[500px]:text-[min(5.34vw,22.4px)] desktop:text-[1.875rem] font-bold text-[#101828]">
+            {t("helpTitle")
+              .split("|")
+              .map((line, i, arr) => (
+                <Fragment key={i}>
+                  {line}
+                  {i < arr.length - 1 && (
+                  <>
+                    <br className="desktop:hidden" />
+                    <span className="hidden desktop:inline"> </span>
+                  </>
+                )}
+                </Fragment>
+              ))}
+          </h2>
+          <p className="mt-6 desktop:mt-3 w-full text-[min(4.37vw,18px)] max-[500px]:text-[min(3.4vw,14.28px)] desktop:text-[1rem] leading-relaxed text-black/70">
+            {t("helpDesc")
+              .split("|")
+              .map((line, i, arr) => (
+                <Fragment key={i}>
+                  {line}
+                  {i < arr.length - 1 && (
+                  <>
+                    <br className="desktop:hidden" />
+                    <span className="hidden desktop:inline"> </span>
+                  </>
+                )}
+                </Fragment>
+              ))}
+          </p>
+          <div className="mt-10 grid w-full max-w-2xl gap-3 px-[4.854vw] desktop:px-0 desktop:grid-cols-2">
+            <Link
+              href={QUOTE_HREF}
+              className="group flex items-center justify-between gap-3 rounded-xl bg-brand pl-10 pr-10 max-[500px]:pr-5 py-8 max-[500px]:py-3 text-[min(4.85vw,20px)] max-[500px]:text-[min(4.126vw,17.33px)] font-bold text-white transition-colors hover:bg-brand-dark desktop:h-[3.75rem] desktop:px-6 desktop:py-0 desktop:text-[1.25rem]"
+            >
+              <span>{t("helpCta")}</span>
+              <Image
+                src="/icons/arrow-orange.png"
+                alt=""
+                width={28}
+                height={28}
+                className="h-9 w-9 max-[500px]:h-7 max-[500px]:w-7 desktop:h-7 desktop:w-7 shrink-0 transition-transform group-hover:translate-x-0.5"
+              />
+            </Link>
+            <Link
+              href="/faq"
+              className="group flex items-center justify-between gap-3 rounded-xl bg-white pl-10 pr-10 max-[500px]:pr-5 py-8 max-[500px]:py-3 text-[min(4.85vw,20px)] max-[500px]:text-[min(4.126vw,17.33px)] font-bold text-black desktop:h-[3.75rem] desktop:px-6 desktop:py-0 desktop:text-[1.25rem]"
+            >
+              <span>{t("helpFaqCta")}</span>
+              <span className="flex h-9 w-9 max-[500px]:h-7 max-[500px]:w-7 desktop:h-7 desktop:w-7 shrink-0 items-center justify-center rounded-full bg-brand text-white transition-transform group-hover:translate-x-0.5">
+                <ArrowRightIcon className="h-5 w-5 max-[500px]:h-4 max-[500px]:w-4 desktop:h-4 desktop:w-4" />
+              </span>
+            </Link>
+          </div>
+          </div>
         </div>
       </section>
     </>

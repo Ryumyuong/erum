@@ -28,7 +28,7 @@ export function PortfolioModal({
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto p-4 sm:items-center"
+      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto p-4 desktop:items-center"
       role="dialog"
       aria-modal="true"
     >
@@ -36,7 +36,7 @@ export function PortfolioModal({
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative z-10 my-4 w-full max-w-4xl rounded-2xl bg-white p-6 shadow-xl md:p-8">
+      <div className="relative z-10 my-4 w-full max-w-4xl rounded-2xl bg-white p-6 shadow-xl desktop:p-8">
         <button
           type="button"
           onClick={onClose}

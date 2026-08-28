@@ -1,13 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { SearchIcon, PlusIcon } from "@/components/icons";
+import { ChevronDownIcon } from "@/components/icons";
 import { pick } from "@/lib/content";
 import { cn } from "@/lib/utils";
-import { faqCategories, type FaqItem } from "@/lib/data/faq";
+import type { FaqItem, FaqCategory } from "@/lib/data/faq";
 
-export function FaqList({ items }: { items: FaqItem[] }) {
+export function FaqList({
+  items,
+  categories,
+}: {
+  items: FaqItem[];
+  categories: FaqCategory[];
+}) {
   const t = useTranslations("page.faq");
   const tc = useTranslations("common");
   const locale = useLocale();
@@ -28,37 +35,50 @@ export function FaqList({ items }: { items: FaqItem[] }) {
     });
   }, [query, category, locale, items]);
 
-  const grouped = useMemo(
-    () =>
-      faqCategories
-        .map((cat) => ({
-          cat,
-          items: filtered.filter((i) => i.category === cat.id),
-        }))
-        .filter((g) => g.items.length > 0),
-    [filtered],
-  );
+  const grouped = useMemo(() => {
+    const known = new Set(categories.map((c) => c.id));
+    const out: { cat: FaqCategory; items: FaqItem[] }[] = [];
+    for (const cat of categories) {
+      const items = filtered.filter((i) => i.category === cat.id);
+      if (items.length) out.push({ cat, items });
+    }
+    // Items whose category isn't in the list still show, under "기타 / Other".
+    const orphans = filtered.filter((i) => !known.has(i.category));
+    if (orphans.length) {
+      out.push({
+        cat: { id: "__other__", label: { en: "Other", ko: "기타" } },
+        items: orphans,
+      });
+    }
+    return out;
+  }, [filtered, categories]);
 
   return (
-    <div className="container-page">
+    <div className="container-page pb-24">
       {/* Search */}
       <div className="relative">
-        <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-faint" />
+        <Image
+          src="/icons/search.png"
+          alt=""
+          width={40}
+          height={40}
+          className="pointer-events-none absolute left-6 max-[500px]:left-4 top-1/2 h-5 w-5 max-[500px]:h-4 max-[500px]:w-4 -translate-y-1/2"
+        />
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("searchPlaceholder")}
-          className="w-full rounded-full border border-line bg-white py-3.5 pl-12 pr-4 text-sm outline-none focus:border-brand"
+          className="w-full rounded-[0.875rem] border border-[#DDDDDD] bg-white py-4 max-[500px]:py-2.5 pl-14 max-[500px]:pl-10 pr-4 text-[min(4.13vw,17px)] max-[500px]:text-[min(3.4vw,14.28px)] desktop:text-[1rem] outline-none placeholder:text-[min(4.13vw,17px)] max-[500px]:placeholder:text-[min(2.913vw,12.23px)] desktop:placeholder:text-[1rem] placeholder:text-[#0A0A0A]/50 focus:border-brand"
         />
       </div>
 
-      {/* Category chips */}
-      <div className="mt-4 flex flex-wrap gap-2">
+      {/* Category tabs (separate from search) */}
+      <div className="mt-4 grid grid-cols-3 gap-2 desktop:flex desktop:flex-wrap">
         <Chip active={category === "all"} onClick={() => setCategory("all")}>
           {tc("all")}
         </Chip>
-        {faqCategories.map((cat) => (
+        {categories.map((cat) => (
           <Chip
             key={cat.id}
             active={category === cat.id}
@@ -70,41 +90,60 @@ export function FaqList({ items }: { items: FaqItem[] }) {
       </div>
 
       {/* Grouped accordion */}
-      <div className="mt-10 space-y-10">
+      <div className="mt-12 space-y-12 desktop:mt-24 desktop:space-y-24">
         {grouped.length === 0 && (
-          <p className="py-10 text-center text-sm text-muted">{tc("noResults")}</p>
+          <p className="py-10 text-center text-[min(3.4vw,14px)] desktop:text-sm text-muted">{tc("noResults")}</p>
         )}
         {grouped.map(({ cat, items }) => (
           <section key={cat.id}>
-            <h2 className="mb-4 text-lg font-bold">{pick(cat.label, locale)}</h2>
-            <div className="space-y-3">
+            <h2 className="mb-5 text-[min(5.83vw,24px)] max-[500px]:text-[min(4.854vw,20.4px)] desktop:text-[1.5rem] font-bold text-[#101828]">
+              {pick(cat.label, locale)}
+            </h2>
+            <div className="divide-y divide-[#DDDDDD] overflow-hidden rounded-[0.625rem] border border-[#DDDDDD] bg-white">
               {items.map((item) => {
                 const isOpen = open === item.id;
                 return (
-                  <div
-                    key={item.id}
-                    className="rounded-[var(--radius-card)] border border-line bg-white"
-                  >
+                  <div key={item.id}>
                     <button
                       type="button"
                       onClick={() => setOpen(isOpen ? null : item.id)}
                       aria-expanded={isOpen}
-                      className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                      className="group flex w-full items-center justify-between gap-4 px-5 py-4 max-[500px]:px-4 max-[500px]:py-3 text-left"
                     >
-                      <span className="text-sm font-semibold md:text-base">
+                      <span
+                        className={cn(
+                          "text-[min(4.13vw,17px)] max-[500px]:text-[min(3.64vw,15.29px)] desktop:text-base font-medium transition-colors group-hover:text-brand",
+                          isOpen ? "text-brand" : "text-[#101828]",
+                        )}
+                      >
                         {pick(item.q, locale)}
                       </span>
-                      <PlusIcon
+                      <ChevronDownIcon
                         className={cn(
                           "h-5 w-5 shrink-0 text-faint transition-transform",
-                          isOpen && "rotate-45 text-brand",
+                          isOpen && "rotate-180 text-brand",
                         )}
                       />
                     </button>
                     {isOpen && (
-                      <p className="border-t border-line px-5 py-4 text-sm leading-relaxed text-muted">
-                        {pick(item.a, locale)}
-                      </p>
+                      <div className="px-5 pb-5">
+                        <p className="text-[min(4.13vw,17px)] max-[500px]:text-[min(3.4vw,14.28px)] desktop:text-[1rem] leading-relaxed text-[#364153]">
+                          {pick(item.a, locale)}
+                        </p>
+                        {item.image && (
+                          /* width/height are the pre-load ratio hint only —
+                             `h-auto` adopts the real ratio, so nothing is
+                             cropped whatever shape is uploaded. */
+                          <Image
+                            src={item.image}
+                            alt=""
+                            width={1600}
+                            height={1067}
+                            sizes="(max-width: 990px) 90vw, 45vw"
+                            className="mt-4 h-auto w-full max-w-xl rounded-[0.625rem]"
+                          />
+                        )}
+                      </div>
                     )}
                   </div>
                 );
@@ -131,10 +170,10 @@ function Chip({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+        "rounded-[5px] border px-2 py-3 max-[500px]:py-2 text-center text-[min(4.13vw,17px)] max-[500px]:text-[min(3.4vw,14.28px)] font-bold transition-colors desktop:rounded-[0.3125rem] desktop:border-0 desktop:px-4 desktop:py-1.5 desktop:text-[0.875rem] desktop:font-medium",
         active
-          ? "bg-brand text-white"
-          : "border border-line bg-white text-muted hover:text-ink",
+          ? "border-[#FD7304] bg-white text-[#FD7304] desktop:bg-[#FD7304] desktop:text-white"
+          : "border-[#D0D0D0] bg-white text-[#101828]/60 desktop:border-0 desktop:bg-[#F3F4F6] desktop:text-[#364153] desktop:hover:bg-[#e9eaed]",
       )}
     >
       {children}

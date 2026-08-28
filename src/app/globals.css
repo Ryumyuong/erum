@@ -15,25 +15,78 @@
   --color-ink: #111827; /* primary text + dark sections */
   --color-navy: #0f1a2e; /* footer / dark solution band */
   --color-cream: #faf6ef; /* soft section / CTA cards */
+  --color-admin: #f3f3f3; /* admin page background */
   --color-line: #e5e7eb; /* borders */
   --color-muted: #6b7280; /* secondary text */
   --color-faint: #9ca3af; /* tertiary text */
 
   /* Typography */
-  --font-sans: var(--font-geist-sans), "Pretendard", -apple-system,
+  --font-sans: var(--font-pretendard), var(--font-geist-sans), -apple-system,
     BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 
   /* Layout */
-  --spacing-header: 4.5rem;
+  --spacing-header: 3.5rem;
+
+  /* Primary desktop/mobile split — desktop ≥991px, mobile ≤990px (matches the
+     root font steps). Use `desktop:` for the main layout switch (header, etc.). */
+  --breakpoint-desktop: 991px;
 
   /* Radius */
   --radius-card: 0.875rem;
 }
 
+/* The page never scrolls sideways at any width. A stray element wider than the
+   viewport is clipped rather than turning the whole document into a horizontal
+   scroller — which is what made a swipe on the SOLUTION carousel drag the whole
+   screen across. "clip" rather than "hidden": hidden would make the element a
+   scroll container and break position: sticky inside it. */
+html,
+body {
+  overflow-x: clip;
+}
+
 html {
   scroll-behavior: smooth;
+  /* Scaling root. Every desktop size in the UI is expressed in rem, so this one
+     value sets the whole page — type, spacing, gutters, radii.
+     It used to track the viewport width, which made a 1280px monitor render the
+     site 15% smaller than a 1512px one; the client compared that against
+     reference sites, where the size is constant and only the amount of visible
+     content changes. Fixed at the 1512px design base so every desktop shows the
+     same physical size. Stepped down for mobile below. */
+  font-size: 16px; /* PC (991px and up) */
+}
+@media (max-width: 990px) {
+  html {
+    font-size: 15px;
+    /* !important so a stale inline value left on <html> by <ZoomLock> — which
+       only runs on desktop now — cannot win over this. */
+    --hero-h: 100dvh !important; /* full screen on mobile, any aspect */
+  } /* mobile (≤990px) */
+  /* Belt and braces: the zoom lock is desktop-only, so mobile must never carry
+     a body zoom even if one was applied before the viewport narrowed. */
+  body {
+    zoom: 1 !important;
+  }
+}
+@media (max-width: 500px) {
+  html {
+    font-size: 14px;
+  } /* folded mobile */
+}
+
+/* Hero Ken Burns — slow zoom-out. Each active slide restarts this; the long
+   crossfade in HeroCarousel keeps the outward motion feeling continuous across
+   image transitions. */
+@keyframes heroZoom {
+  from {
+    transform: scale(1.2);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 body {
@@ -44,16 +97,231 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Shared container */
-.container-page {
-  width: 100%;
-  max-width: 80rem; /* 1280px */
-  margin-inline: auto;
-  padding-inline: 1.25rem;
+/* Tailwind v4 Preflight resets the button cursor — restore the pointer. */
+button:not(:disabled),
+[role="button"],
+label[for],
+summary {
+  cursor: pointer;
 }
 
-@media (min-width: 768px) {
+/* Shared content container — caps inner content at 1600px centered while
+   section backgrounds (applied on the section, outside this container) stay
+   full-bleed. Add `container-full` on a wrapper to opt a section out. */
+.container-page {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: 7.767vw; /* mobile — 32px @412 base */
+}
+
+@media (min-width: 991px) {
   .container-page {
-    padding-inline: 2rem;
+    padding-inline: 9.9375rem; /* desktop section gutter — 159px, fixed (zoom neutralized) */
   }
 }
+
+/* Header gutter override. The 159px desktop gutter eats 318px, which squeezes
+   the nav into two lines on narrower desktops (the labels wrap mid-word). Below
+   1360px the header falls back to a slim gutter — enough that the logo isn't
+   flush to the edge, small enough that the nav still fits on one line (it needs
+   896px of content at the tightened gaps, so 2rem a side clears 991px). Paired
+   with .container-page, which supplies width/max-width. */
+@media (min-width: 991px) and (max-width: 1440px) {
+  .container-header {
+    padding-inline: 1.5rem;
+  }
+}
+
+/* Phones: the 32px section gutter is too much for the header — the menu button
+   and the quote button should sit closer to the screen edges. */
+@media (max-width: 990px) {
+  .container-header {
+    padding-inline: 4.13vw; /* 17px @412 */
+  }
+}
+
+/* Left indent that lines up with .container-page's left content edge, while the
+   element stays full-bleed on the right (used by the factory gallery). One
+   mobile value across the whole ≤990 range — the old 768px step split mobile at
+   a width the design doesn't recognize. */
+.container-left {
+  padding-left: 1.875rem;
+}
+@media (min-width: 991px) {
+  .container-left {
+    /* = (100% - 1600px)/2 + 9.9375rem, floored at the desktop gutter */
+    padding-left: max(9.9375rem, calc(50% - 800px + 9.9375rem));
+  }
+}
+
+/* Admin container — wider 295px left/right gutter on desktop */
+.container-admin {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.5rem; /* tablet-to-small-desktop fallback */
+}
+
+/* Mobile gutter — same 412:32 ratio as .container-page so admin lines up with
+   the public site on phones. */
+@media (max-width: 990px) {
+  .container-admin {
+    padding-inline: 7.767vw;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-admin {
+    padding-inline: 19.51vw; /* admin desktop gutter — 295px @ 1512 */
+  }
+}
+
+/* Accordion chevron — rotates when its <details> is open */
+.accordion-chevron {
+  transition: rotate 200ms ease;
+}
+details[open] > summary .accordion-chevron {
+  rotate: 180deg;
+}
+
+/* Hero display type — plain rem, so it rides the scaling root above. */
+.hero-title {
+  font-size: 4.5rem; /* 72px @1512 */
+  font-weight: 800;
+  letter-spacing: -0.0278em; /* -2px at the 72px design size */
+  line-height: 1.04;
+  /* The headline is English in every locale; Hangul is unaffected by this if a
+     locale ever switches it to Korean. */
+  text-transform: uppercase;
+}
+.hero-subtitle {
+  font-size: 1.5625rem; /* 25px @1512 */
+  font-weight: 700;
+}
+.hero-scroll {
+  font-size: 1.11125rem; /* 17.78px @1512 */
+  font-weight: 700;
+}
+/* Mobile hero type — vw scaled at 412px base, no floor.
+   Wide mobile caps at 600px, folded mobile caps at 420px. */
+@media (max-width: 990px) {
+  .hero-title {
+    font-size: min(7.2816vw, 37px); /* 30px @412, wide-mobile cap reduced */
+    letter-spacing: -1.5px;
+  }
+  .hero-subtitle {
+    font-size: min(3.8835vw, 20px); /* 16px @412, wide-mobile cap reduced */
+  }
+  .hero-scroll {
+    font-size: 15px;
+  }
+}
+@media (max-width: 500px) {
+  .hero-title {
+    font-size: min(7.2816vw, 30.58px); /* 30px @412, cap @420 */
+    letter-spacing: -1px;
+  }
+  .hero-subtitle {
+    font-size: min(3.8835vw, 16.31px); /* 16px @412, cap @420 */
+  }
+  .hero-scroll {
+    font-size: 13px;
+  }
+}
+
+/* The mobile menu covers the page; the floating button on top of it is just
+   in the way. <Header> sets the flag while the drawer is open. */
+body[data-menu-open] .floating-quote {
+  display: none;
+}
+
+/* Floating quote button — fixed 80px on desktop; on mobile the whole control
+   (box, icon, label) scales by vw at the 412px base, capped at the design size. */
+.floating-quote {
+  width: 80px;
+  height: 80px;
+}
+.floating-quote-icon {
+  width: 28px;
+  height: 28px;
+}
+.floating-quote-label {
+  font-size: 12px;
+}
+@media (max-width: 990px) {
+  .floating-quote {
+    width: min(16.5vw, 68px); /* 68px @412 */
+    height: min(16.5vw, 68px);
+  }
+  .floating-quote-icon {
+    width: min(5.83vw, 24px); /* 24px @412 */
+    height: min(5.83vw, 24px);
+  }
+  .floating-quote-label {
+    font-size: min(2.67vw, 11px); /* 11px @412 */
+  }
+}
+
+/* Rich-text blog body — shared by the admin editor and the public post page. */
+.blog-content h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #101828;
+  margin: 1.4em 0 0.5em;
+}
+.blog-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #101828;
+  margin: 1.2em 0 0.4em;
+}
+.blog-content p {
+  margin: 0.6em 0;
+  color: #364153;
+}
+.blog-content strong,
+.blog-content b {
+  font-weight: 700;
+}
+.blog-content ul {
+  list-style: disc;
+  padding-left: 1.4em;
+  margin: 0.6em 0;
+  color: #364153;
+}
+.blog-content li {
+  margin: 0.2em 0;
+}
+/* Inline body images (inserted from the admin editor). `height: auto` keeps
+   each photo's own ratio; the same rule styles the editor, which reuses this
+   class, so what the admin sees matches the published post. */
+.blog-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.4em 0;
+  border-radius: 0.625rem;
+}
+/* Mobile heading sizes — vw scaled at the 412px base, capped at the 412 value
+   (desktop ≥991 keeps the rem sizes above). */
+@media (max-width: 990px) {
+  .blog-content h2 {
+    font-size: min(5.825vw, 24px); /* 24px @412 */
+  }
+  .blog-content h3 {
+    font-size: min(4.126vw, 17px); /* 17px @412 */
+  }
+}
+
+/* Admin <select>: hide the native arrow and draw a custom chevron inset from
+   the right edge so it isn't jammed against the border. */
+.admin-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%236A7282' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
+

@@ -20,6 +20,8 @@ export type FaqItem = {
   category: string;
   q: L;
   a: L;
+  /** Optional illustration shown under the answer (uploaded in the admin). */
+  image?: string;
 };
 
 export const faqItems: FaqItem[] = [
@@ -72,6 +74,18 @@ export const faqItems: FaqItem[] = [
     a: {
       en: "RGB is for screens; CMYK is for printing. Always provide CMYK files for accurate printed colors — RGB may look different once printed.",
       ko: "RGB는 화면용, CMYK는 인쇄용입니다. 정확한 인쇄 색상을 위해 항상 CMYK 파일을 제공해 주세요. RGB는 인쇄 시 다르게 보일 수 있습니다.",
+    },
+  },
+  {
+    id: "design-3",
+    category: "design",
+    q: {
+      en: "What is a print-ready design file?",
+      ko: "전문 디자인 파일이란 무엇인가요?",
+    },
+    a: {
+      en: "A print-ready file is a vector file (AI or PDF) prepared for production — set in CMYK, with outlined fonts, proper cut/fold lines, and at least 3 mm of bleed. Don't have one? Our designers can create it for you.",
+      ko: "인쇄용으로 준비된 벡터 파일(AI 또는 PDF)을 말합니다. CMYK 색상, 윤곽선 처리된 글꼴, 재단·접지선과 3mm 이상의 여백(도련)이 포함되어야 정확하게 제작됩니다. 파일이 없으셔도 저희 디자이너가 만들어 드립니다.",
     },
   },
   {

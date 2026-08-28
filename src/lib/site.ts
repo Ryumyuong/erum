@@ -26,9 +26,9 @@ export const navItems: { key: NavKey; href: string }[] = [
 export const QUOTE_HREF = "/quote";
 
 export const siteContact = {
-  email: "info@boxdle.com",
+  email: "kyungil7442@gmail.com",
   phone: "+82-51-507-9090",
-  whatsapp: "+82-10-XXXX-XXXX",
+  kakao: "http://pf.kakao.com/_xlxmHwd",
   bizNo: "452-20-01402",
   addressEn: "A-1F, 66 Jangpyeong-ro, Saha-gu, Busan, Republic of Korea",
   addressKo: "부산광역시 사하구 장평로 66 A동 1층",
@@ -36,6 +36,6 @@ export const siteContact = {
   ceoKo: "배재현",
   companyEn: "iiroom d&p",
   companyKo: "이룸디앤피",
-  instagram: "https://instagram.com/",
-  blog: "https://blog.naver.com/",
+  instagram: "",
+  blog: "",
 };

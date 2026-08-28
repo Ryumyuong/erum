@@ -5,6 +5,7 @@ export type QuoteOption = {
   label: L;
   desc?: L; // shown in the (?) tooltip
   tone?: string; // placeholder image background
+  image?: string; // admin-uploaded image (from the linked guide item)
   recommend?: boolean; // the "Recommend for me" choice
 };
 

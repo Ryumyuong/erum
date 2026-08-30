@@ -82,7 +82,7 @@ function CtaButton({
       /* desktop:h-[3.75rem] is the shared bottom-CTA height across pages —
          the aspect ratio made the height follow the column width, which is
          why every page ended up with a different one. */
-      className="flex aspect-[324.81/80] items-center justify-between rounded-[0.4844rem] pl-8 pr-6 text-left text-[min(4.85vw,20px)] max-[500px]:text-[min(4.126vw,17.33px)] font-bold text-white desktop:aspect-auto desktop:h-[3.75rem] desktop:text-[1.25rem]"
+      className="flex aspect-[324.81/80] items-center justify-between rounded-[0.4844rem] pl-8 pr-6 text-left text-[min(4.85vw,20px)] max-[500px]:text-[min(4.126vw,17.33px)] break-keep font-bold text-white desktop:aspect-auto desktop:h-[3.75rem] desktop:text-[1.0625rem] min-[1441px]:text-[1.25rem]"
       style={{ backgroundColor: color }}
     >
       <span>{label}</span>

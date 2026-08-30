@@ -116,7 +116,7 @@ export function HeroCarousel({ slides = heroSlides }: { slides?: HeroSlide[] }) 
               centering but drops its horizontal gutter. On mobile it takes the
               same 7.767vw gutter as every other section — flush to the screen
               edge reads as a mistake at phone width. */}
-          <div className="mx-auto w-full max-w-[1600px] px-[7.767vw] pt-10 pb-16 desktop:px-0 desktop:pt-14 desktop:pb-24">
+          <div className="mx-auto w-full max-w-[1600px] px-[7.767vw] pt-10 pb-16 desktop:px-14 desktop:pt-14 desktop:pb-24 min-[1441px]:px-0">
             {/* max-w-4xl, not 3xl: uppercase at the larger display size pushes
                 the first line past 768px and splits it into three. */}
             <h1 className="hero-title max-w-4xl whitespace-pre-line text-white [text-shadow:0_1px_8px_rgba(0,0,0,0.35)]">

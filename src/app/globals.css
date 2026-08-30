@@ -132,6 +132,11 @@ summary {
     padding-inline: 1.5rem;
   }
 }
+@media (min-width: 1200px) and (max-width: 1440px) {
+  .container-header {
+    padding-inline: 3.5rem;
+  }
+}
 
 /* Phones: the 32px section gutter is too much for the header — the menu button
    and the quote button should sit closer to the screen edges. */

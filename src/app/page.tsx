@@ -189,8 +189,8 @@ export default async function HomePage() {
         {/* Desktop — existing static grid */}
         <div className="container-page relative hidden pb-40 pt-32 desktop:block">
           <div
-            className={`flex flex-col gap-10 desktop:flex-row desktop:items-start ${
-              locale === "ko" ? "desktop:gap-[11.6875rem]" : "desktop:gap-[3.1rem]"
+            className={`flex flex-col gap-10 desktop:flex-row desktop:items-start desktop:gap-10 ${
+              locale === "ko" ? "min-[1441px]:gap-[11.6875rem]" : "min-[1441px]:gap-[3.1rem]"
             }`}
           >
             {/* Heading */}

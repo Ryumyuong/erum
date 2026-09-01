@@ -1,43 +1,70 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 
 /**
- * The two wordmark files were exported at different pixel sizes, so each
- * variant declares its own intrinsic width/height. next/image treats these as
- * the source's real dimensions — claiming 254x52 for the 170x35 white file
- * makes it generate a srcset wider than the source and reserve space at the
- * wrong aspect ratio. Rendered size stays CSS-driven (`w-auto` + a height
- * class), so the browser scales from the true ratio either way.
+ * The two lockups are not interchangeable at a single height. The English one
+ * is a big wordmark over a tagline; the Korean one packs 이룸디앤피 plus a much
+ * smaller `iiroom / design & package` block into the same box, so it reads
+ * lighter and needs a step more height to hold its own next to the nav.
+ *
+ * Hence a height class per variant per slot rather than one passed by the
+ * caller — the sizes are a pair that has to be tuned together, so they live
+ * together. Widths differ too, and next/image treats the declared dimensions as
+ * the source's real size (getting them wrong reserves space at the wrong aspect
+ * ratio), so each variant states its own. Rendered size stays CSS-driven.
  */
 const VARIANTS = {
-  default: { src: "/logo/boxdle.png", width: 254, height: 52 },
-  inverted: { src: "/logo/boxdle-white.png", width: 189, height: 39 },
+  ko: {
+    src: "/logo/iiroom-ko.png",
+    white: "/logo/iiroom-ko-white.png",
+    width: 532,
+    height: 240,
+    sizes: { header: "h-9 desktop:h-10", footer: "h-11" },
+  },
+  en: {
+    src: "/logo/iiroom-en.png",
+    white: "/logo/iiroom-en-white.png",
+    width: 586,
+    height: 240,
+    sizes: { header: "h-8 desktop:h-9", footer: "h-10" },
+  },
 } as const;
 
 /**
- * BOXDLE wordmark. Use `inverted` on dark backgrounds (footer / dark bands).
+ * iiroom design & package wordmark. The Korean lockup runs on ko pages and the
+ * English one on en. Use `inverted` on dark backgrounds (footer / dark bands).
  */
 export function Logo({
   inverted = false,
+  size = "header",
   className,
   priority = false,
 }: {
   inverted?: boolean;
+  /** Picks the tuned height pair for this slot. */
+  size?: "header" | "footer";
+  /** Escape hatch — overrides the slot height entirely. */
   className?: string;
   priority?: boolean;
 }) {
-  const variant = inverted ? VARIANTS.inverted : VARIANTS.default;
+  const locale = useLocale();
+  const variant = locale === "ko" ? VARIANTS.ko : VARIANTS.en;
 
   return (
-    <Link href="/" aria-label="BOXDLE — home" className="inline-flex items-center">
+    <Link
+      href="/"
+      aria-label="iiroom design & package — home"
+      className="inline-flex items-center"
+    >
       <Image
-        src={variant.src}
-        alt="BOXDLE"
+        src={inverted ? variant.white : variant.src}
+        alt="iiroom design & package"
         width={variant.width}
         height={variant.height}
         priority={priority}
-        className={cn("w-auto", className || "h-7")}
+        className={cn("w-auto", className || variant.sizes[size])}
       />
     </Link>
   );

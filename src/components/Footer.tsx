@@ -19,7 +19,7 @@ export function Footer({ contact }: { contact: Contact }) {
       <div className="container-page grid grid-cols-2 gap-10 py-24 desktop:grid-cols-4">
         {/* Brand */}
         <div className="col-span-2 desktop:col-span-1">
-          <Logo inverted className="h-5" />
+          <Logo inverted size="footer" />
           <p className="mt-4 max-w-xs text-[min(3.64vw,15px)] desktop:text-[0.875rem] leading-relaxed text-[#99A1AF]">
             {t("brand.tagline")
               .split("|")

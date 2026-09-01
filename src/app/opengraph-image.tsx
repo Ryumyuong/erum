@@ -12,7 +12,7 @@ export const size = { width: 600, height: 600 };
 
 export default async function Image() {
   const logo = await readFile(
-    path.join(process.cwd(), "public/logo/boxdle.png"),
+    path.join(process.cwd(), "public/logo/iiroom-en.png"),
   );
   const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
 
@@ -29,7 +29,7 @@ export default async function Image() {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoSrc} alt="" width={420} height={86} />
+        <img src={logoSrc} alt="" width={420} height={172} />
       </div>
     ),
     size,

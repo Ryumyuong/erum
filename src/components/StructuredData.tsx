@@ -21,7 +21,7 @@ export function StructuredData({
     name: SITE_NAME,
     legalName: ko ? contact.companyKo : contact.companyEn,
     url: siteUrl,
-    logo: `${siteUrl}/logo/boxdle.png`,
+    logo: `${siteUrl}/logo/iiroom-en.png`,
     email: contact.email,
     telephone: contact.phone,
     address: {

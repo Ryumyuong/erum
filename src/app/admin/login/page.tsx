@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
         className="w-full max-w-sm rounded-2xl border border-line bg-white p-8 shadow-sm"
       >
         <div className="mb-6 flex justify-center">
-          <Image src="/logo/boxdle.png" alt="BOXDLE" width={254} height={52} className="h-7 w-auto" />
+          <Image src="/logo/iiroom-ko.png" alt="iiroom design & package" width={532} height={240} className="h-12 w-auto" />
         </div>
         <h1 className="mb-6 text-center text-lg font-bold">관리자 로그인</h1>
 

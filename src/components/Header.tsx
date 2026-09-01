@@ -98,7 +98,7 @@ export function Header() {
 
           {/* Desktop logo */}
           <div className="hidden desktop:block">
-            <Logo priority inverted={overlay} className="h-5" />
+            <Logo priority inverted={overlay} />
           </div>
 
           {/* Desktop nav */}
@@ -124,7 +124,7 @@ export function Header() {
 
         {/* Mobile logo (centered) */}
         <div className="absolute left-1/2 -translate-x-1/2 desktop:hidden">
-          <Logo priority inverted={overlay} className="h-5" />
+          <Logo priority inverted={overlay} />
         </div>
 
         <div className="flex shrink-0 items-center gap-5 max-[1440px]:gap-3">

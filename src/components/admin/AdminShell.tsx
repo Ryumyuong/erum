@@ -9,7 +9,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-line bg-white">
         <div className="container-page flex h-[var(--spacing-header)] items-center justify-between">
           <Link href="/admin" className="flex min-w-0 items-center gap-6 max-[500px]:gap-2">
-            <Image src="/logo/boxdle.png" alt="BOXDLE" width={254} height={52} className="h-6 max-[500px]:h-4 w-auto" />
+            <Image src="/logo/iiroom-ko.png" alt="iiroom design & package" width={532} height={240} className="h-9 max-[500px]:h-7 w-auto" />
             <span className="whitespace-nowrap text-[1.5rem] max-[500px]:text-[0.8125rem] font-bold leading-none text-[#101828]">관리자 대시보드</span>
           </Link>
           <form action={signOut} className="shrink-0">
